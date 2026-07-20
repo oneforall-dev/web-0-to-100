@@ -1,0 +1,6 @@
+interface:
+  display_name: "Web 0 to 100"
+  short_description: "Construye websites comerciales administrables"
+  default_prompt: "Usa $web0to100 para auditar, diseñar, desarrollar, validar y documentar este website comercial."
+policy:
+  allow_implicit_invocation: true

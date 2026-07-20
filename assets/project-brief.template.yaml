@@ -1,0 +1,90 @@
+project:
+  name: { value: "{{NOMBRE_PROYECTO}}", status: PENDIENTE, source: "", notes: "" }
+  business_name: { value: "{{NOMBRE_COMERCIAL}}", status: PENDIENTE, source: "", notes: "" }
+  legal_name: { value: "{{NOMBRE_LEGAL}}", status: PENDIENTE, source: "", notes: "" }
+  niche: { value: "{{NICHO}}", status: PENDIENTE, source: "", notes: "" }
+  market: { value: "{{MERCADO}}", status: PENDIENTE, source: "", notes: "" }
+  language: { value: "{{IDIOMA}}", status: PENDIENTE, source: "", notes: "" }
+  domain: { value: "{{DOMINIO}}", status: PENDIENTE, source: "", notes: "" }
+  staging_url: { value: "{{STAGING}}", status: PENDIENTE, source: "", notes: "" }
+brand:
+  logo: { value: "{{LOGO}}", status: PENDIENTE, source: "", notes: "" }
+  colors: { value: "{{PALETA}}", status: PENDIENTE, source: "", notes: "" }
+  fonts: { value: "{{TIPOGRAFIAS}}", status: PENDIENTE, source: "", notes: "" }
+  personality: { value: "{{PERSONALIDAD}}", status: PENDIENTE, source: "", notes: "" }
+  tone: { value: "{{TONO}}", status: PENDIENTE, source: "", notes: "" }
+  visual_references: { value: "{{REFERENCIAS_VISUALES}}", status: PENDIENTE, source: "", notes: "" }
+audience:
+  primary: { value: "{{PUBLICO_PRINCIPAL}}", status: PENDIENTE, source: "", notes: "" }
+  secondary: { value: "{{PUBLICO_SECUNDARIO}}", status: PENDIENTE, source: "", notes: "" }
+  problems: { value: "{{PROBLEMAS}}", status: PENDIENTE, source: "", notes: "" }
+  desires: { value: "{{DESEOS}}", status: PENDIENTE, source: "", notes: "" }
+  objections: { value: "{{OBJECIONES}}", status: PENDIENTE, source: "", notes: "" }
+  awareness: { value: "{{NIVEL_DE_CONCIENCIA}}", status: PENDIENTE, source: "", notes: "" }
+offer:
+  main: { value: "{{OFERTA_PRINCIPAL}}", status: PENDIENTE, source: "", notes: "" }
+  secondary: { value: "{{SERVICIOS_SECUNDARIOS}}", status: PENDIENTE, source: "", notes: "" }
+  differentiators: { value: "{{DIFERENCIALES}}", status: PENDIENTE, source: "", notes: "" }
+  restrictions: { value: "{{RESTRICCIONES}}", status: PENDIENTE, source: "", notes: "" }
+  prices: { value: "{{PRECIOS}}", status: PENDIENTE, source: "", notes: "" }
+  promotions: { value: "{{PROMOCIONES}}", status: PENDIENTE, source: "", notes: "" }
+conversion:
+  main_goal: { value: "{{OBJETIVO_PRINCIPAL}}", status: PENDIENTE, source: "", notes: "" }
+  primary_cta: { value: "{{CTA_PRINCIPAL}}", status: PENDIENTE, source: "", notes: "" }
+  secondary_cta: { value: "{{CTA_SECUNDARIO}}", status: PENDIENTE, source: "", notes: "" }
+  phone: { value: "{{TELEFONO}}", status: PENDIENTE, source: "", notes: "" }
+  whatsapp: { value: "{{WHATSAPP}}", status: PENDIENTE, source: "", notes: "" }
+  email: { value: "{{CORREO}}", status: PENDIENTE, source: "", notes: "" }
+  booking_url: { value: "{{URL_AGENDA}}", status: PENDIENTE, source: "", notes: "" }
+  checkout_url: { value: "{{URL_COMPRA}}", status: PENDIENTE, source: "", notes: "" }
+  forms: { value: "{{FORMULARIOS}}", status: PENDIENTE, source: "", notes: "" }
+location:
+  address: { value: "{{DIRECCION}}", status: PENDIENTE, source: "", notes: "" }
+  areas: { value: "{{ZONAS}}", status: PENDIENTE, source: "", notes: "" }
+  hours: { value: "{{HORARIOS}}", status: PENDIENTE, source: "", notes: "" }
+  google_maps: { value: "{{GOOGLE_MAPS}}", status: PENDIENTE, source: "", notes: "" }
+trust:
+  reviews_source: { value: "{{FUENTE_RESEÑAS}}", status: PENDIENTE, source: "", notes: "" }
+  rating: { value: "{{CALIFICACION}}", status: PENDIENTE, source: "", notes: "" }
+  review_count: { value: "{{NUMERO_RESEÑAS}}", status: PENDIENTE, source: "", notes: "" }
+  certifications: { value: "{{CERTIFICACIONES}}", status: PENDIENTE, source: "", notes: "" }
+  licenses: { value: "{{LICENCIAS}}", status: PENDIENTE, source: "", notes: "" }
+  cases: { value: "{{CASOS_EXITO}}", status: PENDIENTE, source: "", notes: "" }
+  testimonials: { value: "{{TESTIMONIOS}}", status: PENDIENTE, source: "", notes: "" }
+features:
+  visual_cms: true
+  blog: true
+  clean_urls: true
+  authentication: true
+  password_change: true
+  password_recovery: true
+  backups: true
+  restore: true
+  section_reordering: true
+  section_visibility: true
+  section_deletion: true
+  image_url_editing: true
+  button_editing: true
+  external_links_blank_by_default: true
+  reviews_module: "{{MODULO_RESEÑAS}}"
+  analytics: "{{ANALITICA}}"
+  forms: "{{FORMULARIOS}}"
+  hero_video: "{{VIDEO_HERO}}"
+infrastructure:
+  hosting: { value: "{{HOSTING}}", status: PENDIENTE, source: "", notes: "" }
+  server: { value: "{{APACHE_NGINX}}", status: PENDIENTE, source: "", notes: "" }
+  php_version: { value: "{{VERSION_PHP}}", status: PENDIENTE, source: "", notes: "" }
+  database: { value: "{{BASE_DATOS}}", status: PENDIENTE, source: "", notes: "" }
+  smtp: { value: "{{SMTP}}", status: PENDIENTE, source: "", notes: "" }
+  dns_provider: { value: "{{DNS}}", status: PENDIENTE, source: "", notes: "" }
+  deployment: { value: "{{DEPLOY}}", status: PENDIENTE, source: "", notes: "" }
+legal:
+  privacy: { value: "{{PRIVACIDAD}}", status: PENDIENTE, source: "", notes: "" }
+  cookies: { value: "{{COOKIES}}", status: PENDIENTE, source: "", notes: "" }
+  terms: { value: "{{TERMINOS}}", status: PENDIENTE, source: "", notes: "" }
+  consent: { value: "{{CONSENTIMIENTO}}", status: PENDIENTE, source: "", notes: "" }
+analytics:
+  platform: { value: "{{ANALITICA}}", status: PENDIENTE, source: "", notes: "" }
+  identifier: { value: "{{ID_ANALITICA}}", status: PENDIENTE, source: "", notes: "" }
+  pixel: { value: "{{PIXEL}}", status: PENDIENTE, source: "", notes: "" }
+
