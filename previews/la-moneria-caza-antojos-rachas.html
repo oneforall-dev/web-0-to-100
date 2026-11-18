@@ -1,0 +1,859 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#241339">
+<meta name="description" content="Caza Antojos de La Monería: recoge churros, hallacas, empanadas, helados y waffles; consigue rachas y comparte tu premio.">
+<title>Caza Antojos · La Monería · Rachas</title>
+<style>:root{color-scheme:dark;--ink:#241339;--deep:#190d2b;--panel:#301c49;--line:#563965;--cream:#fff0d0;--muted:#dac3e2;--orange:#ffb655;--purple:#b998fa;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box}body{min-height:100svh;margin:0;background:radial-gradient(ellipse at 87% 10%,#3e2454,transparent 47%),var(--ink);color:var(--cream);min-width:280px}
+button,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:default}button:focus-visible,textarea:focus-visible{outline:3px solid #f6d5ff;outline-offset:4px}[hidden]{display:none!important}
+.arcade{width:min(1380px,100%);margin:auto;padding:0 clamp(15px,4.1vw,64px)}.mast{min-height:82px;display:flex;justify-content:space-between;align-items:center}
+.wordmark{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.055em;line-height:.88;font-size:17px}.wordmark-dot{color:var(--orange)}
+.mark{width:32px;height:29px;margin-inline:4px;display:grid;place-items:center;background:var(--orange);border-radius:50% 50% 47% 47%;position:relative;isolation:isolate}.mark::before{content:"";position:absolute;width:11px;height:11px;left:-5px;top:7px;border-radius:50%;background:var(--orange);box-shadow:31px 0 var(--orange);z-index:-1}.mark i{display:block;width:21px;height:12px;border-radius:7px 7px 8px 8px;background:var(--ink);position:relative;margin-top:4px}.mark i::before{content:"";width:3px;height:4px;position:absolute;top:3px;left:5px;background:var(--orange);border-radius:50%;box-shadow:8px 0 var(--orange)}
+.mast-actions{display:flex;align-items:center;gap:14px}.quiet,.sound{color:var(--cream);background:transparent;border:1px solid #735280;border-radius:8px;font-weight:750}.quiet{padding:8px 13px}.sound{min-width:40px;height:40px;font-size:22px;line-height:1}.sound[aria-pressed="true"],.quiet:not(:disabled):hover,.sound:hover{background:#503365}
+.machine{display:grid;grid-template-columns:minmax(300px,.76fr) minmax(0,1.24fr);gap:clamp(18px,3.8vw,57px);min-height:500px;align-items:center}.left{padding:7px 0 23px}.kicker{color:var(--purple);font-size:11px;font-weight:800;letter-spacing:.17em;display:flex;align-items:center;gap:9px;margin:0 0 22px}.kicker span{display:inline-block;width:7px;height:7px;background:var(--orange);transform:rotate(45deg)}
+h1{font-size:clamp(46px,7.15vw,103px);font-weight:900;line-height:.79;letter-spacing:-.084em;margin:0}h1 em{font-style:normal;color:var(--orange)}h1 em span{display:inline-block;transform:rotate(8deg);margin-left:4px}
+.description{color:var(--muted);font-size:clamp(15px,1.6vw,19px);max-width:320px;line-height:1.42;margin:27px 0}.action{background:var(--orange);color:#311834;border:1px solid #ffd28a;border-radius:9px;min-height:49px;padding:11px 16px;box-shadow:0 4px 0 #a85b43;display:inline-flex;align-items:center;justify-content:space-between;gap:37px;font-weight:800;font-size:17px}.action:not(:disabled):hover{background:#ffca76;transform:translateY(-1px)}.action:not(:disabled):active{transform:translateY(3px);box-shadow:0 1px 0 #a85b43}.action span{font-size:.78em}.play-icon{width:.7em;height:.82em;background:currentColor;clip-path:polygon(0 0,100% 50%,0 100%)}
+.intro-info{display:flex;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin:23px 0 0}.intro-info span span{color:var(--orange)}.intro-info strong{color:var(--cream)}.playfield{min-width:0}
+.stage{background:#432359;border:2px solid #885e9a;border-radius:19px;overflow:hidden;position:relative;height:clamp(400px,calc(100svh - 194px),606px);isolation:isolate;box-shadow:0 0 0 5px #2d1944,0 12px 35px #14081f72;touch-action:none}#world{display:block;width:100%;height:100%}
+.hud{position:absolute;left:12px;right:12px;top:13px;pointer-events:none;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;font-variant-numeric:tabular-nums;gap:4px}.hud-badge,.hud-level{width:max-content;padding:7px 11px;background:#221135ec;border:1px solid #a375ac;border-radius:7px;line-height:1;font-weight:800}.hud-badge:first-child{color:var(--orange)}.hud-badge:last-child{justify-self:end}.hud-badge span{font-size:20px}.hud-badge small,.hud-level{font-size:10px;letter-spacing:.085em}.hud-level{background:#402057ec;color:#f4ddff;border-color:#a375ac}
+.feedback{position:absolute;pointer-events:none;left:50%;top:32%;color:var(--orange);text-shadow:0 2px 8px #2c1039;font-size:clamp(19px,4vw,36px);font-weight:800;white-space:nowrap;opacity:0;transform:translate(-50%,8px)}.feedback.show{animation:score .68s ease-out}
+.greeting{position:absolute;left:50%;top:16%;transform:translateX(-50%);pointer-events:none;background:#241339ee;color:var(--cream);border:1px solid #a375ac;border-radius:10px;padding:9px 15px;font-size:clamp(16px,3vw,26px);font-weight:800;white-space:nowrap}
+@keyframes score{0%{opacity:0;transform:translate(-50%,9px) scale(.8)}20%,65%{opacity:1;transform:translate(-50%,0) scale(1)}100%{opacity:0;transform:translate(-50%,-13px)}}
+.controls{display:flex;align-items:center;justify-content:space-between;min-height:54px;color:var(--muted);font-size:13px}.desktop-controls{display:flex;align-items:center;gap:4px}.desktop-controls span{margin-left:4px}kbd,.touch-controls button{display:grid;place-items:center;border:1px solid #795784;border-bottom-width:2px;border-radius:5px;background:#392352;color:var(--cream);width:24px;height:23px;font:inherit;font-weight:800}.touch-controls{display:none;gap:9px}.touch-controls button{width:54px;height:44px;font-size:22px;touch-action:manipulation}.touch-controls button:active{background:#6c4484}.pause{font-size:13px}
+.strip{display:flex;justify-content:space-between;align-items:center;gap:9px 16px;border-top:1px solid var(--line);padding:15px 0 18px;font-size:clamp(11px,1.4vw,14px);font-weight:750;color:#ecd7ed}.strip span{display:flex;align-items:center;gap:7px}.strip span::before{content:"";width:5px;height:5px;background:#dd9b54;transform:rotate(45deg);flex:none}.left h2{font-size:clamp(40px,5.4vw,77px);line-height:.85;letter-spacing:-.07em;margin:0}.progress{display:flex;gap:6px;padding:0;list-style:none;max-width:250px}.progress li{height:6px;flex:1;background:#513462;border-radius:6px}.progress .filled{background:var(--orange)}.hint{font-size:13px;line-height:1.35;color:var(--muted)}.final-score{color:var(--orange);font-size:45px;font-weight:800;line-height:1;margin:14px 0}.final-score small{font-size:18px}.prize{margin:14px 0 18px}.replay{display:block;margin-top:14px;text-align:left}.replay span{padding-left:7px}
+.stage-overlay{position:absolute;inset:0;background:#1b0c2ad0;display:grid;place-items:center;text-align:center}.overlay-card h2{font-size:38px;line-height:1;margin:0 0 22px}.graphics-error{position:absolute;inset:35% 9% auto;text-align:center;background:var(--deep);border-radius:12px;padding:14px}
+dialog{width:min(440px,calc(100vw - 32px));color:var(--cream);background:var(--panel);border:1px solid #a375ac;border-radius:14px;padding:20px 24px 25px}dialog::backdrop{background:#150c23b8}.dialog-head,.menu-items{display:flex;justify-content:space-between;gap:18px}.dialog-head{align-items:center}.dialog-head h2{margin:0;font-size:34px;letter-spacing:-.045em}.menu-items section{flex:1}.menu-items h3{color:var(--orange);margin:16px 0 4px}.menu-items ul{list-style:none;padding:0;margin:0}.menu-items li{border-bottom:1px solid var(--line);padding:7px 0}
+@media(max-width:800px){.mast{min-height:63px}.machine{grid-template-columns:1fr;gap:13px;min-height:0}.left{padding:7px 0 5px}.kicker{margin-bottom:11px;letter-spacing:.13em}h1{font-size:clamp(48px,14vw,76px);line-height:.83}.description{margin:13px 0;font-size:15px;max-width:400px}.action{min-height:41px;font-size:15px;padding:8px 12px;gap:24px}.intro-info{font-size:12px;margin-top:13px}.stage{height:clamp(280px,47svh,485px);border-radius:15px}.strip{justify-content:flex-start;padding-top:10px}.controls{min-height:49px}body:is([data-state="greeting"],[data-state="playing"],[data-state="paused"]) .left{display:none}body:is([data-state="greeting"],[data-state="playing"],[data-state="paused"]) .stage{height:clamp(290px,calc(100svh - 140px),690px)}body:is([data-state="greeting"],[data-state="playing"],[data-state="paused"]) .strip{display:none}body[data-state="result"] .stage{height:clamp(230px,43svh,425px)}.left h2 br{display:none}.left h2{font-size:40px}.replay{display:inline-block;margin:9px 0 0 7px;font-size:13px}}
+@media (pointer:coarse),(max-width:800px){.touch-controls{display:flex}.desktop-controls{display:none}.controls{padding:5px 0}}
+@media(prefers-reduced-motion:reduce){.feedback.show{animation:none;opacity:1}.action:not(:disabled):hover,.action:not(:disabled):active{transform:none}}
+</style>
+</head>
+<body>
+<main class="arcade">
+<header class="mast">
+<div class="wordmark"><span class="mark" aria-hidden="true"><i></i></span><span>LA<br>MONERÍA<span class="wordmark-dot">.</span></span></div>
+<div class="mast-actions"><button id="menu" type="button" class="quiet">Ver menú</button><button id="sound" type="button" class="sound" aria-pressed="false" aria-label="Activar sonido" title="Activar sonido"><span aria-hidden="true">♪</span></button></div>
+</header>
+<section class="machine" aria-label="Caza Antojos">
+<div class="left">
+<div class="intro">
+<p class="kicker"><span></span> EL MINIJUEGO DE LA MONERÍA</p>
+<h1>CAZA<br><em>ANTOJOS<span>!</span></em></h1>
+<p class="description">Atrapa lo dulce y lo salado. Esquiva los platos vacíos y supera tu récord.</p>
+<button id="start" class="action" type="button" disabled>Jugar ahora <span class="play-icon" aria-hidden="true"></span></button>
+<div class="intro-info"><span>3 rondas · 90 segundos</span><span><span aria-hidden="true">★</span> Récord <strong id="best">0</strong></span></div>
+</div>
+<div class="round-panel" hidden>
+<p id="round-tag" class="kicker"><span></span> RONDA 1 DE 3</p>
+<h2 id="round-name">La primera tanda</h2>
+<p id="round-desc" class="description">Atrapa los antojos de la barra.</p>
+<ol id="progress" class="progress" aria-label="Progreso de las rondas"><li></li><li></li><li></li></ol>
+<p class="hint">Repite el mismo antojo para sumar racha 🔥 · Cambiar cuesta 1 punto. Tres aciertos seguidos dan 15 puntos extra.</p>
+</div>
+<div class="result-panel" hidden>
+<p id="result-tag" class="kicker"><span></span> PARTIDA TERMINADA</p>
+<h2>¡Qué<br>antojo!</h2>
+<p id="final-score" class="final-score">0 <small>pts</small></p>
+<p class="description prize">Comparte esta captura con La Monería y recibe un premio en tu próxima compra.</p>
+<button id="share" class="action" type="button">Compartir captura <span aria-hidden="true">↗</span></button>
+<button id="again" class="quiet replay" type="button">Volver a jugar <span aria-hidden="true">↻</span></button>
+<p id="share-status" role="status" class="hint" hidden></p>
+</div>
+</div>
+<div class="playfield">
+<div id="stage" class="stage" aria-label="Pista de tres carriles">
+<canvas id="world" aria-label="Escenario del juego"></canvas>
+<div class="hud"><div class="hud-badge"><span id="points">0</span><small> PTS</small></div><div id="level" class="hud-level">RONDA 1 / 3</div><div class="hud-badge"><span id="timer">1:30</span></div></div>
+<div id="greeting" class="greeting" role="status" hidden></div>
+<div id="feedback" class="feedback" aria-live="polite"></div>
+<div id="overlay" class="stage-overlay" hidden><div class="overlay-card"><h2 id="overlay-title">Pausa</h2><button id="resume" class="action" type="button">Seguir jugando <span class="play-icon" aria-hidden="true"></span></button></div></div>
+<p id="graphics-error" class="graphics-error" hidden>El escenario no se pudo cargar en este navegador.</p>
+</div>
+<div class="controls"><span class="desktop-controls"><kbd>←</kbd> <kbd>→</kbd> <span>Mueve al mono</span></span><div class="touch-controls" aria-label="Controles de movimiento"><button type="button" id="left" aria-label="Mover a la izquierda">←</button><button type="button" id="right" aria-label="Mover a la derecha">→</button></div><button id="pause" class="quiet pause" type="button" disabled>Pausar</button></div>
+</div>
+</section>
+<footer class="strip" aria-label="Antojos del juego"><span>Churros</span><span>Hallacas</span><span>Empanadas</span><span>Helados</span><span>Waffles dulces</span><span>Waffles salados</span></footer>
+</main>
+<dialog id="menu-dialog" aria-labelledby="menu-title"><div class="dialog-head"><h2 id="menu-title">El menú</h2><form method="dialog"><button aria-label="Cerrar menú" class="sound" type="submit">×</button></form></div><div class="menu-items"><section><h3>Dulce</h3><ul><li>Churros</li><li>Helados</li><li>Waffles dulces</li></ul></section><section><h3>Salado</h3><ul><li>Hallacas</li><li>Empanadas</li><li>Waffles salados</li></ul></section></div></dialog>
+<script>function createCanvasWorld(canvas) {
+  const ctx=canvas.getContext('2d');
+  if(!ctx)throw new Error('Canvas is unavailable');
+  const items=new Set(), sparks=[];
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+  let width=1,height=1,dpr=1,shift=0,shake=0,time=0;
+
+  function resize() {
+    width=canvas.clientWidth || 1;
+    height=canvas.clientHeight || 1;
+    dpr=Math.min(devicePixelRatio || 1,2);
+    canvas.width=Math.round(width*dpr);
+    canvas.height=Math.round(height*dpr);
+  }
+
+  new ResizeObserver(resize).observe(canvas);
+  resize();
+
+  function ellipse(x,y,rx,ry,color) {
+    ctx.fillStyle=color;
+    ctx.beginPath();
+    ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2);
+    ctx.fill();
+  }
+
+  function rect(x,y,w,h,r,color) {
+    ctx.fillStyle=color;
+    ctx.beginPath();
+    ctx.roundRect(x,y,w,h,r);
+    ctx.fill();
+  }
+
+  function poly(points,color) {
+    ctx.fillStyle=color;
+    ctx.beginPath();
+    points.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function line(points,color,weight) {
+    ctx.beginPath();
+    points.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));
+    ctx.lineWidth=weight;
+    ctx.strokeStyle=color;
+    ctx.lineCap='round';
+    ctx.stroke();
+  }
+
+  function project(x,z) {
+    const depth=15/Math.max(5,19-z), road=Math.min(width*.135,height*.188);
+    return [width*.5+(x-shift)*road*depth,height*.215+height*.61*depth,depth*road];
+  }
+
+  function ground(points,color) {
+    poly(points.map(([x,z])=>project(x,z).slice(0,2)),color);
+  }
+
+  function lamp(x,z) {
+    const [px,py,s]=project(x,z);
+    line([[px,py],[px,py-2.16*s]],'#503259',s*.075);
+    ellipse(px,py-2.16*s,s*.145,s*.159,'#ffc780');
+    ellipse(px,py-2.16*s,s*.060,s*.078,'#fff0b7');
+    ellipse(px,py,s*.17,s*.07,'#63446f');
+  }
+
+  function booth(side,z) {
+    const [x,y,s]=project(side*4.67,z);
+    const w=2.59*s,h=2.6*s;
+    const ox=x-w*.5, oy=y-h;
+    ellipse(x,y,w*.63,s*.19,'#3c245353');
+    rect(ox,oy+.41*s,w,h-.41*s,s*.08,'#713d71');
+    rect(ox+.14*s,oy+.58*s,w-.28*s,h-.73*s,s*.05,'#a75987');
+    rect(ox+.25*s,oy+.68*s,w-.5*s,h*.32,s*.045,'#e28e95');
+    rect(ox+.32*s,oy+.74*s,w-.64*s,h*.245,s*.036,'#693969');
+    for(let i=0;i<3;i++) {
+      ellipse(x+(i-1)*.51*s,oy+1.16*s,s*.15,s*.10,'#ffd182');
+    }
+    rect(ox-.10*s,oy+1.26*s,w+.2*s,.15*s,.033*s,'#fdc7a0');
+    rect(ox+.22*s,oy+1.60*s,w-.44*s,.73*s,.04*s,'#8f4a7c');
+    for(let i=0;i<5;i++) rect(ox+(.34+i*.38)*s,oy+1.66*s,s*.04,.61*s,0,'#68356080');
+    for(let i=0;i<8;i++) {
+      const a=ox+(-.1+i*.352)*s;
+      poly([[a+.04*s,oy+.33*s],[a+.355*s,oy+.33*s],[a+.35*s,oy+.65*s],[a,oy+.65*s]],i%2?'#f7bbad':'#9b4e84');
+    }
+    rect(ox+.06*s,oy-.38*s,w-.12*s,.63*s,.05*s,'#ffc282');
+    rect(ox+.105*s,oy-.335*s,w-.21*s,.54*s,.03*s,'#522958');
+    ctx.fillStyle='#ffe9ba';
+    ctx.font='800 '+Math.round(s*.257)+'px system-ui';
+    ctx.textAlign='center';
+    ctx.fillText(side<0?'LA MONERÍA':'ANTOJOS',x,oy+.014*s);
+  }
+
+  function drawScenery(offset) {
+    const sky=ctx.createLinearGradient(0,0,0,height*.55);
+    sky.addColorStop(0,'#754685');
+    sky.addColorStop(.72,'#d186a4');
+    sky.addColorStop(1,'#ecaaae');
+    ctx.fillStyle=sky;
+    ctx.fillRect(0,0,width,height);
+    ellipse(width*.49,height*.19,height*.066,height*.066,'#ffc08a');
+    for(let i=0;i<8;i++) {
+      const y=height*(.09+(i%3)*.032);
+      const x=width*((i+1)/9);
+      line([[x-12,y],[x+9,y]],'#efabb982',2);
+    }
+    for(let i=0;i<23;i++) {
+      const x=i*width/22,h=height*(.06+((i*17)%7)*.009);
+      rect(x,height*.33-h,width*.047,h,0,i%2?'#9d6496':'#af73a0');
+    }
+    ctx.fillStyle='#80568b';
+    ctx.fillRect(0,height*.32,width,height);
+    ground([[-3.76,-95],[3.76,-95],[3.76,10],[-3.76,10]],'#705291');
+    for(const side of [-1,1]) {
+      ground([[side*3.76,-95],[side*4.37,-95],[side*4.37,10],[side*3.76,10]],'#c27da8');
+      ground([[side*3.85,-95],[side*3.94,-95],[side*3.94,10],[side*3.85,10]],'#ffc0b6');
+    }
+    for(let z=-70;z<9;z+=1.9) {
+      const zz=z+offset%1.9;
+      for(const x of [-1.125,1.125]) ground([[x-.022,zz],[x+.022,zz],[x+.022,zz+.65],[x-.022,zz+.65]],'#d1a0cf');
+    }
+    for(let i=8;i>=0;i--) {
+      const z=-2-i*5.6;
+      for(const side of [-1,1]) {
+        const [x,y,s]=project(side*(6.6+(i%3)*.32),z);
+        const h=s*(2.65+(i%4)*.62);
+        rect(x-1.34*s,y-h,2.68*s,h,2,i%2?'#795082':'#8a5b8d');
+        rect(x-1.4*s,y-h,2.80*s,s*.16,1,'#a1729c');
+        for(let n=0;n<3;n++) rect(x+(-.88+n*.66)*s,y-h*.79,.32*s,.52*s,1,'#d78eac');
+        lamp(side*4.1,z);
+      }
+    }
+    booth(-1,-5.1);
+    booth(1,-8.5);
+  }
+
+  function drawChef({x,s,time,tilt,pose}) {
+    ctx.save();
+    ctx.translate(x,Math.sin(time*5)*s*.028);
+    ctx.rotate(tilt);
+    const facing=Math.cos(Math.PI*pose.turn);
+    const back=facing<0;
+    ctx.scale(.43+.57*Math.abs(facing),1);
+    const brown='#76414c',tan='#be7257', peach='#ffc18d', cream='#fff4db', cocoa='#452437';
+    ellipse(-.24*s,-.13*s,.20*s,.145*s,brown);
+    ellipse(.24*s,-.13*s,.20*s,.145*s,brown);
+    ellipse(0,-.58*s,.45*s,.48*s,brown);
+    ellipse(-.42*s,-.64*s,.15*s,.29*s,tan);
+    ellipse(-.49*s,-.44*s,.12*s,.12*s,peach);
+    ctx.save();
+    ctx.translate(.37*s,-.83*s);
+    ctx.rotate(-.33-pose.wave);
+    ellipse(0,.15*s,.15*s,.26*s,tan);
+    ellipse(0,.42*s,.12*s,.12*s,peach);
+    ctx.restore();
+    if(back) {
+      ctx.beginPath();
+      ctx.moveTo(.035*s,-.36*s);
+      ctx.bezierCurveTo(.37*s,-.14*s,.55*s,-.32*s,.53*s,-.48*s);
+      ctx.strokeStyle='#663545';
+      ctx.lineWidth=.115*s;
+      ctx.lineCap='round';
+      ctx.stroke();
+      line([[-.37*s,-.59*s],[.37*s,-.59*s]],cream,.065*s);
+      line([[-.075*s,-.67*s],[.065*s,-.58*s],[-.053*s,-.46*s]],cream,.055*s);
+      line([[.075*s,-.66*s],[-.065*s,-.58*s],[.061*s,-.46*s]],cream,.055*s);
+    } else {
+      rect(-.29*s,-.87*s,.58*s,.58*s,.13*s,cream);
+      rect(-.16*s,-.54*s,.32*s,.17*s,.047*s,'#e79977');
+    }
+    ellipse(-.52*s,-1.40*s,.20*s,.21*s,brown);
+    ellipse(.52*s,-1.40*s,.20*s,.21*s,brown);
+    ellipse(0,-1.43*s,.56*s,.51*s,tan);
+    if(back) {
+      ellipse(.08*s,-1.43*s,.43*s,.42*s,'#ae644d');
+      ellipse(-.16*s,-1.61*s,.30*s,.25*s,tan);
+    } else {
+      ellipse(-.55*s,-1.40*s,.10*s,.11*s,peach);
+      ellipse(.55*s,-1.40*s,.10*s,.11*s,peach);
+      ellipse(-.164*s,-1.48*s,.23*s,.293*s,peach);
+      ellipse(.164*s,-1.48*s,.23*s,.293*s,peach);
+      ellipse(0,-1.25*s,.38*s,.22*s,peach);
+      for(const side of [-1,1]) {
+        ellipse(side*.158*s,-1.47*s,.052*s,.065*s,cocoa);
+        ellipse(side*.158*s+.014*s,-1.49*s,.015*s,.016*s,cream);
+        ellipse(side*.27*s,-1.31*s,.059*s,.027*s,'#eb8a80');
+      }
+      ellipse(0,-1.36*s,.060*s,.039*s,cocoa);
+      ctx.beginPath();
+      ctx.arc(0,-1.263*s,.106*s,.2,Math.PI-.2);
+      ctx.strokeStyle=cocoa;
+      ctx.lineWidth=.035*s;
+      ctx.stroke();
+    }
+    rect(-.32*s,-2.01*s,.64*s,.20*s,.06*s,'#edd5ce');
+    ellipse(-.23*s,-2.08*s,.245*s,.21*s,cream);
+    ellipse(.23*s,-2.08*s,.245*s,.21*s,cream);
+    ellipse(0,-2.16*s,.28*s,.25*s,'#fff8e8');
+    ctx.restore();
+  }
+
+  function drawFood(kind,x,y,s,age) {
+    ellipse(x,y,s*.48,s*.15,'#40215450');
+    ctx.save();
+    ctx.translate(x,y-s*(.44+.072*Math.sin(age*4)));
+    ctx.scale(s,s);
+    ctx.rotate(Math.sin(age*2.7)*.075);
+    if(kind==='churros') {
+      for(let i=-1;i<=1;i++) {
+        line([[i*.16-.1,.25],[i*.21+.1,-.39]],i===0?'#e38135':'#bd5f30',.17);
+        line([[i*.16-.13,.23],[i*.21+.072,-.40]],'#ffc06a',.035);
+        line([[i*.16-.07,.24],[i*.21+.126,-.38]],'#f29745',.026);
+      }
+    } else if(kind==='hallacas') {
+      poly([[-.51,.10],[-.33,-.28],[.45,-.27],[.49,.16],[.30,.27],[-.49,.26]],'#365940');
+      poly([[-.51,.1],[-.33,-.28],[.45,-.27],[.34,.10]],'#719859');
+      poly([[.34,.10],[.45,-.27],[.49,.16],[.30,.27]],'#4c6f4a');
+      for(const x of [-.24,.17])line([[x+.12,-.28],[x,.1],[x,.25]],'#e2c092',.034);
+      line([[-.39,-.13],[.40,-.12],[.48,.012]],'#ecd1a4',.031);
+    } else if(kind==='empanadas') {
+      ctx.beginPath();
+      ctx.moveTo(-.50,.20);
+      ctx.bezierCurveTo(-.52,-.49,.50,-.49,.51,.20);
+      ctx.quadraticCurveTo(0,.28,-.50,.20);
+      ctx.fillStyle='#bd682e';
+      ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(-.43,.15);
+      ctx.bezierCurveTo(-.42,-.43,.43,-.43,.45,.15);
+      ctx.closePath();
+      ctx.fillStyle='#efa344';
+      ctx.fill();
+      for(let i=0;i<8;i++) {
+        const a=i*Math.PI/7;
+        ellipse(.46*Math.cos(a),.16-.47*Math.sin(a),.049,.045,'#ffd27a');
+      }
+    } else if(kind==='helados') {
+      poly([[-.27,-.04],[.27,-.04],[0,.47]],'#c97a3d');
+      line([[-.18,.13],[.10,.29]],'#a85c39',.027);
+      line([[.16,.14],[-.10,.29]],'#a85c39',.027);
+      ellipse(0,-.089,.32,.24,'#ee92ad');
+      ellipse(0,-.296,.235,.20,'#ffd69e');
+      ellipse(-.087,-.35,.083,.054,'#ffedba');
+    } else if(kind==='plate') {
+      ellipse(0,.06,.51,.27,'#a086bd');
+      ellipse(0,.008,.51,.247,'#ead8ef');
+      ellipse(0,.008,.38,.168,'#c8b2da');
+      ellipse(0,.025,.32,.128,'#ead8ef');
+      line([[-.13,-.053],[.13,.097]],'#ac537a',.043);
+      line([[-.13,.097],[.13,-.053]],'#ac537a',.043);
+    } else {
+      const sweet=kind==='dulce';
+      ellipse(0,.06,.50,.28,'#a65b39');
+      ellipse(0,0,.50,.26,'#f1a655');
+      for(let i=-2;i<=2;i++)for(let j=-1;j<=1;j++)rect(i*.14-.046,j*.109-.032,.092,.064,.010,'#b86c42');
+      ellipse(.045,-.039,.229,.129,sweet?'#b64d77':'#6b8d4e');
+      ellipse(-.02,-.075,.122,.078,sweet?'#ffcee0':'#ffd894');
+      ellipse(.092,-.12,.065,.054,sweet?'#ce4c69':'#c65a48');
+    }
+    ctx.restore();
+  }
+
+  return {
+    render(age,dt,player,walking,offset,pose) {
+      time=age;
+      shake=Math.max(0,shake-dt*1.8);
+      shift=player*.18+(reduced.matches?0:Math.sin(age*52)*shake*.15);
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      drawScenery(offset);
+      const zPlayer=3.35;
+      const figures=[...items,{position:{z:zPlayer},chef:true}].sort((a,b)=>a.position.z-b.position.z);
+      for(const figure of figures) {
+        const [x,y,s]=project(figure.chef?player:figure.position.x,figure.position.z);
+        if(figure.chef) {
+          ellipse(x,y,s*.56,s*.17,'#4a315a');
+          ctx.save();
+          ctx.translate(0,y);
+          drawChef({x,s,time,tilt:walking?Math.sin(age*16)*.04:0,pose});
+          ctx.restore();
+        } else drawFood(figure.kind,x,y,s,age+figure.position.x);
+      }
+      for(let i=sparks.length-1;i>=0;i--) {
+        const p=sparks[i];
+        p.age+=dt;
+        if(p.age>.5){sparks.splice(i,1);continue;}
+        const [x,y,s]=project(p.x+p.vx*p.age,p.z);
+        ellipse(x,y-s*(.55+2*p.age-p.age*p.age*4),s*.046,s*.046,p.color);
+      }
+    },
+    item(kind,lane,z) {
+      const item={kind,position:{x:lane*2.25,z}};
+      items.add(item);
+      return item;
+    },
+    remove(_kind,item){items.delete(item);},
+    impact(){shake=.39;},
+    burst(x,z){
+      if(reduced.matches)return;
+      for(let i=0;i<8;i++) sparks.push({
+        x,z:z+(Math.random()-.5)*.4,age:0,vx:(Math.random()-.5)*5,color:['#fff0c8','#ffbe6f','#e4a1ef'][i%3]
+      });
+    }
+  };
+}
+
+const prizeMessage = 'Comparte esta captura con La Monería y recibe un premio en tu próxima compra.';
+async function createResultCard(scene, score) {
+  const card=document.createElement('canvas');card.width=720;card.height=840;
+  const pen=card.getContext('2d');const bg=pen.createLinearGradient(0,0,720,840);
+  bg.addColorStop(0,'#432658');bg.addColorStop(1,'#1e102f');
+  pen.fillStyle=bg;pen.fillRect(0,0,720,840);pen.textAlign='center';
+  pen.fillStyle='#bd9ee9';pen.font='bold 25px system-ui';pen.fillText('LA MONERÍA',360,77);
+  pen.fillStyle='#ffb655';pen.font='900 63px system-ui';pen.fillText('CAZA ANTOJOS',360,153);
+  const frame={x:42,y:188,width:636,height:354};
+  pen.beginPath();pen.roundRect(frame.x,frame.y,frame.width,frame.height,18);pen.save();pen.clip();
+  pen.fillStyle='#754685';pen.fillRect(frame.x,frame.y,frame.width,frame.height);
+  if(scene.width && scene.height) {
+    const scale=Math.max(frame.width/scene.width,frame.height/scene.height);
+    const sw=frame.width/scale,sh=frame.height/scale;
+    const cy=scene.height*(scene.height>scene.width?.66:.56);
+    const sy=Math.min(scene.height-sh,Math.max(0,cy-sh/2));
+    pen.drawImage(scene,(scene.width-sw)/2,sy,sw,sh,frame.x,frame.y,frame.width,frame.height);
+  }
+  pen.restore();pen.lineWidth=3;pen.strokeStyle='#a375ac';pen.stroke();
+  pen.fillStyle='#fff0d0';pen.font='900 85px system-ui';pen.fillText(String(score),360,645);
+  pen.fillStyle='#ffb655';pen.font='bold 24px system-ui';pen.fillText('PUNTOS',360,681);
+  pen.fillStyle='#fff0d0';pen.font='600 23px system-ui';
+  let line='', y=754;
+  for(const word of prizeMessage.split(' ')) {
+    const next=line?line+' '+word:word;
+    if(pen.measureText(next).width>620){pen.fillText(line,360,y);line=word;y+=32;}
+    else line=next;
+  }
+  pen.fillText(line,360,y);
+  const png=await new Promise(resolve=>card.toBlob(resolve,'image/png'));
+  if(!png)throw new Error('No se pudo guardar la captura');
+  return new File([png],'caza-antojos-'+score+'-puntos.png',{type:'image/png'});
+}
+function downloadResult(card){const url=URL.createObjectURL(card), link=document.createElement('a');
+  link.href=url;link.download=card.name;link.click();setTimeout(()=>URL.revokeObjectURL(url),10000);}
+
+function createWorld(canvas) { return createCanvasWorld(canvas); }
+
+
+
+
+const get = id => document.getElementById(id);
+const stage = get('stage');
+const start = get('start');
+const pause = get('pause');
+const resume = get('resume');
+const again = get('again');
+const menu = get('menu-dialog');
+const feedback = get('feedback');
+const greeting = get('greeting');
+const sound = get('sound');
+const share = get('share');
+const shareStatus = get('share-status');
+const rounds = [
+  {name:'La primera tanda',desc:'La barra abre. Agarra ritmo con los primeros antojos.'},
+  {name:'Hora pico',desc:'La cocina se acelera y llegan más platos vacíos.'},
+  {name:'La última tanda',desc:'Aprovecha los últimos combos antes de que se acabe el tiempo.'}
+];
+const foods = ['churros','hallacas','empanadas','helados','dulce','salado'];
+const foodLabels = {
+  churros:'Churros', hallacas:'Hallaca', empanadas:'Empanada',
+  helados:'Helado', dulce:'Waffle dulce', salado:'Waffle salado'
+};
+const duration = 90;
+const laneSpacing = 2.25;
+const pickZ = 3.35;
+const storageKey = 'la-moneria-caza-antojos-best-v1';
+const objects = [];
+const panels = Object.fromEntries(['intro','round-panel','result-panel'].map(name=>[name,document.querySelector('.'+name)]));
+const clamp = (value,min,max) => Math.min(max,Math.max(min,value));
+const choose = items => items[Math.floor(Math.random()*items.length)];
+const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
+const front={turn:0,wave:0}, back={turn:1,wave:0};
+const greetingDuration=1.8;
+let state='intro', best=0, score=0, streak=0, elapsed=0, round=0, spawnAt=0, deck=[], recordAtStart=0;
+let lane=0, player=0, scrolling=0, feedbackTime=0, greetingTime=0, gesture=null, soundOn=false, audio=null;
+let resultCard=null;
+// Cada alimento conserva su propio preconteo, independientemente de los demás.
+const foodCounts = new Map(foods.map(kind => [kind, 0]));
+let world;
+
+try {
+  best = Math.max(0, Number(localStorage.getItem(storageKey)) || 0);
+} catch {}
+get('best').textContent = best;
+
+function playTone(type) {
+  if(!soundOn || !audio || audio.state !== 'running') return;
+  const now = audio.currentTime;
+  const notes = {point:[470,660],combo:[540,720,920],miss:[145],round:[440,550,660],finish:[390,520,660,780]}[type];
+  notes.forEach((frequency,index) => {
+    const note=audio.createOscillator(), gain=audio.createGain(), tick=now+index*.055;
+    note.type=type==='miss'?'triangle':'sine';
+    note.frequency.value=frequency;
+    gain.gain.setValueAtTime(.001,tick);
+    gain.gain.exponentialRampToValueAtTime(.085,tick+.017);
+    gain.gain.exponentialRampToValueAtTime(.001,tick+.135);
+    note.connect(gain).connect(audio.destination);
+    note.start(tick);
+    note.stop(tick+.15);
+  });
+}
+
+sound.addEventListener('click', async () => {
+  soundOn=!soundOn;
+  if(soundOn) {
+    try {
+      audio??=new (window.AudioContext || window.webkitAudioContext)();
+      await audio.resume();
+      playTone('point');
+    } catch {soundOn=false;}
+  }
+  sound.setAttribute('aria-pressed',String(soundOn));
+  sound.setAttribute('aria-label',soundOn?'Silenciar':'Activar sonido');
+  sound.title=soundOn?'Silenciar':'Activar sonido';
+});
+
+function setState(value) {
+  state=value;
+  document.body.dataset.state=value;
+  panels.intro.hidden=value!=='intro';
+  panels['round-panel'].hidden=value!=='greeting' && value!=='playing' && value!=='paused';
+  panels['result-panel'].hidden=value!=='result';
+  greeting.hidden=value!=='greeting';
+  get('overlay').hidden=value!=='paused';
+  pause.disabled=value!=='playing' && value!=='paused';
+  pause.textContent=value==='paused'?'Reanudar':'Pausar';
+  get('left').disabled=value!=='playing';
+  get('right').disabled=value!=='playing';
+}
+
+function updateRound() {
+  get('round-tag').lastChild.nodeValue=' RONDA '+(round+1)+' DE 3';
+  get('round-name').textContent=rounds[round].name;
+  get('round-desc').textContent=rounds[round].desc;
+  get('level').textContent='RONDA '+(round+1)+' / 3';
+  [...get('progress').children].forEach((bar,index)=>bar.classList.toggle('filled',index<=round));
+}
+
+function updateHud() {
+  get('points').textContent=score;
+  const left=Math.max(0,Math.ceil(duration-elapsed));
+  get('timer').textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');
+}
+
+function announce(message,isError=false, seconds=.73, isFood=false) {
+  feedback.textContent=message;
+  feedback.style.color=isError?'#ffb5cd':'';
+  // Ajuste limitado a la leyenda del alimento. El diseño del juego no cambia.
+  feedback.style.animationDuration=seconds+'s';
+  feedback.style.whiteSpace=isFood?'normal':'';
+  feedback.style.width=isFood?'calc(100% - 26px)':'';
+  feedback.style.maxWidth=isFood?'480px':'';
+  feedback.style.fontSize=isFood?'clamp(14px,2.7vw,25px)':'';
+  feedback.style.lineHeight=isFood?'1.3':'';
+  feedback.style.background=isFood?'#241339e6':'';
+  feedback.style.padding=isFood?'9px 12px':'';
+  feedback.style.borderRadius=isFood?'10px':'';
+  feedback.style.textAlign=isFood?'center':'';
+  feedback.classList.remove('show');
+  void feedback.offsetWidth;
+  feedback.classList.add('show');
+  feedbackTime=seconds;
+}
+
+function add(kind,track,z) {
+  objects.push({kind,track,node:world.item(kind,track,z),checked:false});
+}
+
+function remove(index) {
+  const {kind,node}=objects[index];
+  world.remove(kind,node);
+  objects.splice(index,1);
+}
+
+function clear() {
+  while(objects.length) remove(objects.length-1);
+}
+
+function nextFood() {
+  if(!deck.length) {
+    deck=[...foods];
+    for(let i=deck.length-1;i>0;i--) {
+      const j=Math.floor(Math.random()*(i+1));
+      [deck[i],deck[j]]=[deck[j],deck[i]];
+    }
+  }
+  return deck.pop();
+}
+
+function serve(z) {
+  const lanes=[-1,0,1];
+  const track=choose(lanes);
+  add(nextFood(),track,z);
+  if(round>0 || Math.random()<.55) add('plate',choose(lanes.filter(n=>n!==track)),z);
+}
+
+function startGame() {
+  clear();
+  elapsed=score=streak=round=lane=player=scrolling=feedbackTime=greetingTime=0;
+  recordAtStart=best;
+  deck=[];
+  for(const kind of foods)foodCounts.set(kind,0);
+  spawnAt=2.1;
+  serve(-5.2);
+  serve(-19.5);
+  serve(-33.8);
+  feedback.classList.remove('show');
+  shareStatus.hidden=true;
+  resultCard=null;
+  updateRound();
+  updateHud();
+  setState('greeting');
+  greeting.textContent='¡Hola!';
+  window.scrollTo({top:0,behavior:'instant'});
+}
+
+function greet(dt) {
+  if(!menu.open && !document.hidden)greetingTime+=dt;
+  const turn=clamp((greetingTime-.98)/.65,0,1);
+  const hand=clamp(Math.min(greetingTime/.23,(.98-greetingTime)/.21),0,1);
+  if(turn>=.9 && greeting.textContent!=='¡Vamos!')greeting.textContent='¡Vamos!';
+  world.render(greetingTime,dt,0,false,0,reducedMotion.matches
+    ? (turn>=.8?back:front)
+    : {turn:turn*turn*(3-2*turn),wave:hand*(2.35+.31*Math.sin(greetingTime*20))});
+  if(greetingTime<greetingDuration)return;
+  setState('playing');
+  pause.focus({preventScroll:true});
+  playTone('round');
+}
+
+function stopGame(showFocus=true) {
+  if(state!=='playing')return;
+  setState('paused');
+  if(showFocus) resume.focus({preventScroll:true});
+}
+
+function continueGame() {
+  if(state!=='paused')return;
+  setState('playing');
+  pause.focus({preventScroll:true});
+}
+
+function finishGame() {
+  if(score>best) {
+    best=score;
+    try {localStorage.setItem(storageKey,String(best));} catch {}
+  }
+  get('best').textContent=best;
+  get('final-score').firstChild.nodeValue=score+' ';
+  get('result-tag').lastChild.nodeValue=score>recordAtStart?' NUEVO RÉCORD':' PARTIDA TERMINADA';
+  clear();
+  showPreview();
+  share.disabled=true;
+  setState('result');
+  world.render(time,0,0,false,0,back);
+  again.focus({preventScroll:true});
+  playTone('finish');
+  const capture=createResultCard(get('world'),score);
+  resultCard=capture;
+  capture.then(file=>{
+    if(resultCard!==capture)return;
+    resultCard=file;
+    share.disabled=false;
+  },()=>{
+    if(resultCard!==capture)return;
+    showShareStatus('Toma una captura de esta pantalla para compartir tu resultado.');
+  });
+}
+
+function showPreview() {
+  add('churros',-1,.2);
+  add('helados',1,-1.1);
+  add('dulce',0,-5.7);
+  add('hallacas',-1,-8.5);
+  add('empanadas',1,-11.5);
+  add('salado',0,-16.3);
+  add('plate',1,-17.5);
+}
+
+function breakFoodStreak(kind) {
+  // Dejar pasar un alimento reinicia SOLO su propio preconteo.
+  const previous=foodCounts.get(kind)||0;
+  foodCounts.set(kind,0);
+  if(previous>=2)announce('¡Racha de '+foodLabels[kind]+' perdida!',true,1.1,true);
+}
+
+function scoreItem(object) {
+  if(object.kind==='plate') {
+    // Plato vacío: penalización antigua; no cancela las rachas de alimentos.
+    streak=0;
+    score=Math.max(0,score-10);
+    announce('Plato vacío · −10',true);
+    world.impact();
+    playTone('miss');
+    return;
+  }
+
+  const kind=object.kind;
+  // Primera captura de este alimento: +10 y deja un preconteo de 1.
+  // Segunda: +10 +1. Tercera: +10 +2. Otros alimentos no lo afectan.
+  const bonus=foodCounts.get(kind)||0;
+  foodCounts.set(kind,bonus+1);
+
+  streak++;
+  const combo=streak%3===0;
+  // Combo del juego original: el tercer acierto paga +25 en vez de +10.
+  const base=combo?25:10;
+  const earned=base+bonus;
+  score+=earned;
+  const details=['¡'+foodLabels[kind]+'!','+'+earned+' puntos'];
+  if(bonus)details.push('🔥 Racha +'+bonus);
+  if(combo)details.push('Combo +15');
+  announce(details.join(' · '),false,1.55,true);
+  world.burst(player,pickZ);
+  playTone(combo?'combo':'point');
+}
+
+function updateGame(dt) {
+  elapsed=Math.min(duration,elapsed+dt);
+  if(elapsed>=duration) {
+    updateHud();
+    finishGame();
+    return;
+  }
+  const nowRound=Math.floor(elapsed/30);
+  if(nowRound!==round) {
+    round=nowRound;
+    updateRound();
+    announce('¡Ronda '+(round+1)+'!');
+    playTone('round');
+  }
+  const progress=elapsed/duration;
+  const deltaZ=(8.5+7.5*progress)*dt;
+  scrolling+=deltaZ;
+  if(elapsed>=spawnAt) {
+    serve(-34);
+    spawnAt=elapsed+1.76-.62*progress;
+  }
+  for(let i=objects.length-1;i>=0;i--) {
+    const object=objects[i];
+    const previousZ=object.node.position.z;
+    const z=object.node.position.z+=deltaZ;
+    const near=Math.abs(player-object.track*laneSpacing)<(object.kind==='plate'?.57:.91);
+    if(!object.checked && z>=pickZ-.46 && previousZ<=pickZ+.35 && near) {
+      scoreItem(object);
+      remove(i);
+    } else if(z>pickZ+.35 && !object.checked) {
+      object.checked=true;
+      if(object.kind!=='plate') {
+        streak=0;
+        breakFoodStreak(object.kind);
+      }
+    } else if(z>8.5) {
+      remove(i);
+    }
+  }
+  updateHud();
+}
+
+function move(amount) {
+  if(state==='playing')lane=clamp(lane+amount,-1,1);
+}
+
+get('left').addEventListener('click',()=>move(-1));
+get('right').addEventListener('click',()=>move(1));
+start.addEventListener('click',startGame);
+again.addEventListener('click',startGame);
+resume.addEventListener('click',continueGame);
+pause.addEventListener('click',()=>state==='paused'?continueGame():stopGame());
+get('menu').addEventListener('click',()=>{
+  stopGame(false);
+  menu.showModal();
+});
+menu.addEventListener('click',event=>{if(event.target===menu)menu.close();});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stopGame(false);});
+
+window.addEventListener('keydown',event=>{
+  if(menu.open || event.altKey || event.ctrlKey || event.metaKey)return;
+  if(state==='playing' && ['ArrowLeft','ArrowRight','a','d'].includes(event.key)) {
+    event.preventDefault();
+    if(!event.repeat)move(['ArrowLeft','a'].includes(event.key)?-1:1);
+  }
+  if(event.key==='Escape' && !event.repeat) {
+    if(state==='playing')stopGame();
+    else if(state==='paused')continueGame();
+  }
+});
+
+stage.addEventListener('pointerdown',event=>{
+  if(state!=='playing' || !event.isPrimary || event.target.closest('button'))return;
+  stage.setPointerCapture(event.pointerId);
+  gesture={x:event.clientX,id:event.pointerId};
+});
+stage.addEventListener('pointerup',event=>{
+  if(!gesture || gesture.id!==event.pointerId)return;
+  const distance=event.clientX-gesture.x;
+  const bounds=stage.getBoundingClientRect();
+  const third=clamp(Math.floor((event.clientX-bounds.left)/bounds.width*3)-1,-1,1);
+  if(state==='playing') {
+    if(Math.abs(distance)>25)move(Math.sign(distance));
+    else lane=third;
+  }
+  gesture=null;
+});
+stage.addEventListener('pointercancel',()=>{gesture=null;});
+stage.addEventListener('lostpointercapture',()=>{gesture=null;});
+
+function showShareStatus(message) {
+  shareStatus.textContent=message;
+  shareStatus.hidden=false;
+}
+
+share.addEventListener('click',async ()=>{
+  const file=resultCard;
+  if(!(file instanceof File))return;
+  const data={files:[file],text:'Hice '+score+' puntos en Caza Antojos de La Monería.'};
+  if(navigator.share && navigator.canShare?.({files:[file]})) {
+    try {
+      await navigator.share(data);
+      return;
+    } catch(error) {if(error.name==='AbortError')return;}
+  }
+  downloadResult(file);
+  if(resultCard===file)showShareStatus('Comparte la imagen descargada con La Monería.');
+});
+
+let last=performance.now(), time=0, introAccumulator=0;
+function tick(now) {
+  const dt=clamp((now-last)/1000,0,.1);
+  last=now;
+  if(state==='greeting') {
+    greet(dt);
+  } else if(state==='playing') {
+    time+=dt;
+    player+=(lane*laneSpacing-player)*(1-Math.exp(-dt*15));
+    updateGame(dt);
+    feedbackTime=Math.max(0,feedbackTime-dt);
+    if(!feedbackTime)feedback.classList.remove('show');
+    if(state==='playing')world.render(time,dt,player,Math.abs(lane*laneSpacing-player)>.05,scrolling,back);
+  } else if(state==='paused') {
+    world.render(time,0,player,false,scrolling,back);
+  } else {
+    introAccumulator+=dt;
+    if(introAccumulator>=1/32) {
+      time+=introAccumulator*.7;
+      world.render(time,introAccumulator,0,false,0,state==='result'?back:front);
+      introAccumulator=0;
+    }
+  }
+  requestAnimationFrame(tick);
+}
+
+setState('intro');
+try {
+  try {
+    world=createWorld(get('world'));
+  } catch {
+    const original=get('world');
+    const replacement=original.cloneNode();
+    original.replaceWith(replacement);
+    world=createCanvasWorld(replacement);
+  }
+  showPreview();
+  world.render(0,0,0,false,0,front);
+  start.disabled=false;
+  requestAnimationFrame(tick);
+} catch (error) {
+  console.error(error);
+  get('graphics-error').hidden=false;
+}
+</script>
+</body>
+</html>
